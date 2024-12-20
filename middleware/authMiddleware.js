@@ -55,8 +55,16 @@ exports.decodeAdminJWTToken = async (req, res, next) => {
             message: "Token is not valid",
           });
         }
-  
+       
         req.user = user;
+        console.log(req.user, 'admin')
+        if(req.user.role != 'admin')
+        {
+            return res.status(500).json({
+                status: false,
+                message: "You are not authenticated to this",
+              });
+        }
         next();
       });
     } catch (err) {
